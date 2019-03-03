@@ -48,4 +48,13 @@ public class Joke implements Serializable {
 
 	public Joke() {
 	}
+
+	@Override
+	public String toString() {
+		return "Joke{" +
+				"id=" + id +
+				", body='" + body + '\'' +
+				", createdAt=" + createdAt +
+				'}';
+	}
 }

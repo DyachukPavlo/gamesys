@@ -116,7 +116,7 @@ public class Article implements Serializable {
 
     @Override
     public String toString() {
-        return "Article{" +
+        return "GoogleReqSrv{" +
                 "id=" + id +
                 ", publishedAt=" + publishedAt +
                 ", author='" + author + '\'' +

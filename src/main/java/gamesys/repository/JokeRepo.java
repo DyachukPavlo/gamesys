@@ -16,11 +16,11 @@ public class JokeRepo implements CustomCrudRepo<Joke>{
 		this.entityManager = entityManager;
 	}
 
-	public List findAll() {
+	public List<Joke> findAll() {
 		return entityManager.createNativeQuery("select * from jokes", Joke.class).getResultList();
 	}
 
-	public List findLastFew(int quantity) {
+	public List<Joke> findLastFew(int quantity) {
 		return entityManager.createNativeQuery("select TOP :quantity * from jokes order by id desc", Joke.class)
 				.setParameter("quantity", quantity).getResultList();
 	}

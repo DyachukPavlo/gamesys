@@ -33,7 +33,7 @@ public class ArticleRepo implements CustomCrudRepo<Article>{
         return entityManager.createNativeQuery("select * from articles", Article.class).getResultList();
     }
 
-    public List findLastFew(int quantity) {
+    public List<Article> findLastFew(int quantity) {
         return entityManager.createNativeQuery("select TOP :quantity * from articles order by id desc", Article.class)
                 .setParameter("quantity", quantity).getResultList();
     }
