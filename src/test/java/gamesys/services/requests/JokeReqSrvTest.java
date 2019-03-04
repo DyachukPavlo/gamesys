@@ -2,7 +2,6 @@ package gamesys.services.requests;
 
 import gamesys.repository.JokeRepo;
 import gamesys.services.crud.JokeSrv;
-import gamesys.services.utils.RequestHandler;
 import gamesys.services.utils.StringConverter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,12 +38,7 @@ public class JokeReqSrvTest {
         }
 
         @Bean
-        RequestHandler requestSrv(){
-            return new RequestHandler();
-        }
-
-        @Bean
-        JokeReqSrv jokeReqSrv(RequestHandler requestHandler, JokeSrv jokeSrv){
+        JokeReqSrv jokeReqSrv(JokeSrv jokeSrv){
             return new JokeReqSrv(jokeSrv);
         }
     }
@@ -56,19 +50,20 @@ public class JokeReqSrvTest {
     private JokeReqSrv jokeReqSrv;
 
     @Test
+    @Rollback
+    public void isDataSaved() {
+        jokeReqSrv.saveResponse(jokeReqSrv.sendRequest());
+        jokeReqSrv.saveResponse(jokeReqSrv.sendRequest());
+        assertEquals(2, jokeSrv.findAll().size());
+    }
+
+
+    @Test
     public void isDataValid() {
         String input = jokeReqSrv.sendRequest();
         jokeReqSrv.saveResponse(input);
         assertNotEquals(input, jokeSrv.findFew(1).get(0).getBody());
         assertEquals(StringConverter.process(input), jokeSrv.findFew(1).get(0).getBody());
-    }
-
-
-    @Test
-    @Rollback
-    public void isDataSaved() {
-        jokeReqSrv.saveResponse(jokeReqSrv.sendRequest());
-        assertEquals(1, jokeSrv.findAll().size());
     }
 
 }

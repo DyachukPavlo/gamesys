@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table(name = "articles")
@@ -112,6 +113,23 @@ public class Article implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Article)) return false;
+        Article article = (Article) o;
+        return Objects.equals(getAuthor(), article.getAuthor()) &&
+                Objects.equals(getDescription(), article.getDescription()) &&
+                Objects.equals(getTitle(), article.getTitle()) &&
+                Objects.equals(getUrl(), article.getUrl()) &&
+                Objects.equals(getContent(), article.getContent());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAuthor(), getDescription(), getTitle(), getUrl(), getContent());
     }
 
     @Override
